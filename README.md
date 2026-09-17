@@ -109,21 +109,6 @@ pc-builder/
 
 ---
 
-## 📊 Практическое задание 1: анализ конкурентов
-
-Технический аудит трёх сайтов с конфигураторами ПК: стек, семантика HTML5, адаптивность, Lighthouse, хранилища и cookies, аналитика, функции с приоритетами для нашего проекта.
-
-| Сайт | Стек | Lighthouse (Perf / A11y / BP / SEO) |
-|---|---|---|
-| [PCPartPicker](https://pcpartpicker.com/list/) | SSR + jQuery, Cloudflare | 87 / 93 / 92 / 50* |
-| [DNS](https://www.dns-shop.ru/configurator/) | Yii + Vue 3 + jQuery, Qrator | 41 / 76 / 96 / 92 |
-| [Регард](https://www.regard.ru/configurator) | React + Next.js | 66 / 75 / 96 / 92 |
-
-<sub>Условия проверки: мобильный интернет 4G+, университет, Chrome DevTools, режим Mobile. \* Замер получил страницу проверки Cloudflare (код 403).</sub>
-
-📄 Полный отчёт: [docs/audit-report.md](docs/audit-report.md) · [PDF](docs/audit-report.pdf)
-
----
 
 ## 🗺️ План разработки
 
