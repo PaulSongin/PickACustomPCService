@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Добро пожаловать — Сборка ПК онлайн</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/welcome.js" defer></script>
+</head>
+<body class="page">
+
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__logo" href="index.php" aria-label="Сборка ПК онлайн — на главную">
+        <span class="header__logo-mark" aria-hidden="true">PC</span>
+        <span class="header__logo-text">Сборка ПК онлайн</span>
+      </a>
+      <nav class="header__nav" aria-label="Основная навигация">
+        <ul class="header__menu">
+          <li><a class="header__link" href="catalog.php">Каталог</a></li>
+          <li><a class="header__link" href="builder.html">Конструктор</a></li>
+          <li><a class="header__link" href="recommendations.php">Готовые сборки</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="welcome" id="welcome" aria-labelledby="welcome-title" hidden>
+      <h1 class="welcome__title" id="welcome-title">Добро пожаловать!</h1>
+      <p class="welcome__subtitle">Регистрация прошла успешно. Ваш логин: <strong id="welcome-login"></strong></p>
+
+      <div class="birthday" id="birthday">
+        <div class="birthday__days">
+          <span class="birthday__number" id="birthday-number"></span>
+          <span class="birthday__unit" id="birthday-unit"></span>
+        </div>
+        <p class="birthday__text" id="birthday-text"></p>
+      </div>
+
+      <h2 class="welcome__heading">Ваши данные</h2>
+      <dl class="summary">
+        <div class="summary__row">
+          <dt class="summary__term">ФИО</dt>
+          <dd class="summary__value" id="summary-fio"></dd>
+        </div>
+        <div class="summary__row">
+          <dt class="summary__term">Пол</dt>
+          <dd class="summary__value" id="summary-gender"></dd>
+        </div>
+        <div class="summary__row">
+          <dt class="summary__term">Дата рождения</dt>
+          <dd class="summary__value" id="summary-birthdate"></dd>
+        </div>
+        <div class="summary__row">
+          <dt class="summary__term">Страна</dt>
+          <dd class="summary__value" id="summary-country"></dd>
+        </div>
+        <div class="summary__row">
+          <dt class="summary__term">Интересы</dt>
+          <dd class="summary__value">
+            <ul class="tags" id="summary-interests"></ul>
+          </dd>
+        </div>
+        <div class="summary__row" id="summary-about-row">
+          <dt class="summary__term">О себе</dt>
+          <dd class="summary__value summary__value--text" id="summary-about"></dd>
+        </div>
+      </dl>
+
+      <div class="welcome__actions">
+        <a class="form__button form__button--primary" href="builder.html">Собрать компьютер</a>
+        <a class="form__button form__button--secondary" href="register.html">Новая регистрация</a>
+      </div>
+    </section>
+
+    <section class="welcome welcome--empty" id="welcome-empty" aria-labelledby="empty-title" hidden>
+      <h1 class="welcome__title" id="empty-title">Данные не найдены</h1>
+      <p class="welcome__subtitle">Похоже, вы открыли эту страницу напрямую. Сначала заполните форму регистрации.</p>
+      <div class="welcome__actions">
+        <a class="form__button form__button--primary" href="register.html">Перейти к регистрации</a>
+      </div>
+    </section>
+
+    <noscript>
+      <p class="welcome__noscript">Для отображения приветствия включите JavaScript.</p>
+    </noscript>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">© 2026 Сборка ПК онлайн</p>
+  </footer>
+
+</body>
+</html>

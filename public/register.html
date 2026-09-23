@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Регистрация в сервисе «Сборка ПК онлайн»: сохраняйте сборки и оформляйте заказы.">
+  <title>Регистрация — Сборка ПК онлайн</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/register.js" defer></script>
+</head>
+<body class="page">
+
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__logo" href="index.php" aria-label="Сборка ПК онлайн — на главную">
+        <span class="header__logo-mark" aria-hidden="true">PC</span>
+        <span class="header__logo-text">Сборка ПК онлайн</span>
+      </a>
+      <nav class="header__nav" aria-label="Основная навигация">
+        <ul class="header__menu">
+          <li><a class="header__link" href="catalog.php">Каталог</a></li>
+          <li><a class="header__link" href="builder.html">Конструктор</a></li>
+          <li><a class="header__link" href="recommendations.php">Готовые сборки</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="register" aria-labelledby="register-title">
+      <div class="register__intro">
+        <h1 class="register__title" id="register-title">Создайте аккаунт</h1>
+        <p class="register__subtitle">Сохраняйте сборки, делитесь ими и получайте скидку в день рождения.</p>
+      </div>
+
+      <form class="register__form form" id="register-form" action="welcome.html" method="get" autocomplete="on">
+
+        <fieldset class="form__group">
+          <legend class="form__legend">Учётная запись</legend>
+
+          <div class="form__field">
+            <label class="form__label" for="login">Логин <span class="form__required" aria-hidden="true">*</span></label>
+            <input class="form__input" type="text" id="login" name="login"
+                   required minlength="3" maxlength="20"
+                   pattern="[A-Za-z][A-Za-z0-9_]{2,19}"
+                   autocomplete="username" placeholder="ivan_2006"
+                   aria-describedby="login-hint login-error">
+            <small class="form__hint" id="login-hint">3–20 символов: латинские буквы, цифры и «_», начинается с буквы</small>
+            <span class="form__error" id="login-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form__field">
+            <label class="form__label" for="password">Пароль <span class="form__required" aria-hidden="true">*</span></label>
+            <div class="form__password">
+              <input class="form__input" type="password" id="password"
+                     required minlength="8" maxlength="64"
+                     pattern="(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d).{8,64}"
+                     autocomplete="new-password"
+                     aria-describedby="password-hint password-error">
+              <button class="form__toggle" type="button" data-toggle="password" aria-label="Показать пароль">Показать</button>
+            </div>
+            <div class="form__strength" aria-hidden="true">
+              <span class="form__strength-bar" id="strength-bar"></span>
+            </div>
+            <small class="form__hint" id="password-hint">Минимум 8 символов: строчная и заглавная буквы и цифра</small>
+            <span class="form__error" id="password-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form__field">
+            <label class="form__label" for="password-confirm">Подтверждение пароля <span class="form__required" aria-hidden="true">*</span></label>
+            <div class="form__password">
+              <input class="form__input" type="password" id="password-confirm"
+                     required minlength="8" maxlength="64"
+                     autocomplete="new-password"
+                     aria-describedby="password-confirm-error">
+              <button class="form__toggle" type="button" data-toggle="password-confirm" aria-label="Показать пароль">Показать</button>
+            </div>
+            <span class="form__error" id="password-confirm-error" aria-live="polite"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="form__group">
+          <legend class="form__legend">Личные данные</legend>
+
+          <div class="form__field">
+            <label class="form__label" for="fio">ФИО <span class="form__required" aria-hidden="true">*</span></label>
+            <input class="form__input" type="text" id="fio" name="fio"
+                   required minlength="5" maxlength="100"
+                   pattern="\s*[A-Za-zА-Яа-яЁё\-]{2,}(\s+[A-Za-zА-Яа-яЁё\-]{2,}){1,2}\s*"
+                   autocomplete="name" placeholder="Иванов Иван Иванович"
+                   aria-describedby="fio-hint fio-error">
+            <small class="form__hint" id="fio-hint">Фамилия, имя и отчество (если есть) через пробел</small>
+            <span class="form__error" id="fio-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form__field" role="radiogroup" aria-labelledby="gender-label" aria-describedby="gender-error">
+            <span class="form__label" id="gender-label">Пол <span class="form__required" aria-hidden="true">*</span></span>
+            <div class="form__options form__options--inline">
+              <label class="form__option">
+                <input class="form__radio" type="radio" name="gender" value="male" required>
+                Мужской
+              </label>
+              <label class="form__option">
+                <input class="form__radio" type="radio" name="gender" value="female">
+                Женский
+              </label>
+            </div>
+            <span class="form__error" id="gender-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form__row">
+            <div class="form__field">
+              <label class="form__label" for="birthdate">Дата рождения <span class="form__required" aria-hidden="true">*</span></label>
+              <input class="form__input" type="date" id="birthdate" name="birthdate"
+                     required min="1920-01-01" max="2012-12-31"
+                     autocomplete="bday"
+                     aria-describedby="birthdate-hint birthdate-error">
+              <small class="form__hint" id="birthdate-hint">Регистрация с 14 лет. В день рождения — скидка</small>
+              <span class="form__error" id="birthdate-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form__field">
+              <label class="form__label" for="country">Страна <span class="form__required" aria-hidden="true">*</span></label>
+              <select class="form__input form__select" id="country" name="country" required
+                      autocomplete="country-name" aria-describedby="country-error">
+                <option value="" selected disabled>Выберите страну</option>
+                <option value="Беларусь">Беларусь</option>
+                <option value="Россия">Россия</option>
+                <option value="Казахстан">Казахстан</option>
+                <option value="Узбекистан">Узбекистан</option>
+                <option value="Армения">Армения</option>
+                <option value="Польша">Польша</option>
+                <option value="Литва">Литва</option>
+                <option value="Латвия">Латвия</option>
+                <option value="Германия">Германия</option>
+                <option value="Другая">Другая</option>
+              </select>
+              <span class="form__error" id="country-error" aria-live="polite"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form__group" id="interests" aria-describedby="interests-hint interests-error">
+          <legend class="form__legend">Для чего вам компьютер? <span class="form__required" aria-hidden="true">*</span></legend>
+          <small class="form__hint" id="interests-hint">Выберите от 1 до 5 вариантов — подберём готовые сборки под ваши задачи</small>
+          <div class="form__options form__options--grid">
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Игры"> Игры</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Стриминг"> Стриминг</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Монтаж видео"> Монтаж видео</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="3D и дизайн"> 3D и дизайн</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Программирование"> Программирование</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Учёба и офис"> Учёба и офис</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Разгон"> Разгон</label>
+            <label class="form__option"><input class="form__checkbox" type="checkbox" name="interests" value="Моддинг корпусов"> Моддинг корпусов</label>
+          </div>
+          <span class="form__error" id="interests-error" aria-live="polite"></span>
+        </fieldset>
+
+        <div class="form__field">
+          <label class="form__label" for="about">О себе <span class="form__optional">(необязательно)</span></label>
+          <textarea class="form__input form__textarea" id="about" name="about"
+                    rows="4" maxlength="500"
+                    placeholder="Например: собираю первый игровой ПК, бюджет до 2500 BYN"
+                    aria-describedby="about-hint about-error"></textarea>
+          <div class="form__meta">
+            <small class="form__hint" id="about-hint">От 10 до 500 символов, без символов &lt; и &gt;</small>
+            <small class="form__counter" id="about-counter">0 / 500</small>
+          </div>
+          <span class="form__error" id="about-error" aria-live="polite"></span>
+        </div>
+
+        <div class="form__field form__field--checkbox">
+          <input class="form__checkbox" type="checkbox" id="agree" required aria-describedby="agree-error">
+          <label class="form__checkbox-label" for="agree">
+            Я принимаю <a class="form__link" href="terms.html" target="_blank" rel="noopener">условия использования</a>
+            и&nbsp;согласен на&nbsp;обработку персональных данных <span class="form__required" aria-hidden="true">*</span>
+          </label>
+        </div>
+        <span class="form__error form__error--block" id="agree-error" aria-live="polite"></span>
+
+        <div class="form__actions">
+          <button class="form__button form__button--secondary" type="reset">Очистить</button>
+          <button class="form__button form__button--primary" type="submit">Зарегистрироваться</button>
+        </div>
+
+        <p class="form__footer">
+          <span class="form__required" aria-hidden="true">*</span> — обязательные поля.
+          Уже есть аккаунт? <a class="form__link" href="login.html">Войти</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__text">© 2026 Сборка ПК онлайн</p>
+  </footer>
+
+</body>
+</html>
