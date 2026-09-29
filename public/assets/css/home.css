@@ -1,0 +1,720 @@
+/* ==========================================================================
+   Главная страница
+   Компьютер (≥1024px) и планшет (768–1023px) — CSS Grid.
+   Телефон (<768px) — FlexBox, переключается media-запросом в конце файла.
+   ========================================================================== */
+
+.header__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.header__button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.header__button:hover {
+  border-color: #fff;
+}
+
+.header__button--accent {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.header__button--accent:hover {
+  background: var(--color-primary-hover);
+}
+
+/* ---------- Сетка страницы: компьютер ---------- */
+
+.home {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px 56px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "hero    hero    hero    promo"
+    "cats    cats    cats    cats"
+    "builds  builds  builds  popular"
+    "steps   steps   steps   steps"
+    "reviews reviews reviews reviews";
+  gap: 24px;
+}
+
+.hero       { grid-area: hero; }
+.promo      { grid-area: promo; }
+.categories { grid-area: cats; }
+.builds     { grid-area: builds; }
+.popular    { grid-area: popular; }
+.steps      { grid-area: steps; }
+.reviews    { grid-area: reviews; }
+
+.card,
+.hero,
+.promo,
+.popular,
+.build,
+.step,
+.review {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+.section-title {
+  margin: 0 0 16px;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.chip {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #fff;
+  border-radius: 6px;
+}
+
+.chip--cpu  { background: #2563eb; }
+.chip--gpu  { background: #16a34a; }
+.chip--mb   { background: #7c3aed; }
+.chip--ram  { background: #db2777; }
+.chip--ssd  { background: #0891b2; }
+.chip--psu  { background: #ea580c; }
+.chip--case { background: #475569; }
+.chip--cool { background: #0d9488; }
+
+/* ---------- Первый экран: внутренняя сетка из двух колонок ---------- */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: 32px;
+  padding: 40px;
+}
+
+.hero__badge {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+  border-radius: 999px;
+}
+
+.hero__title {
+  margin: 0 0 16px;
+  font-size: 40px;
+  line-height: 1.1;
+}
+
+.hero__text {
+  margin: 0 0 24px;
+  color: var(--color-muted);
+}
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.hero__actions .form__button {
+  flex: 0 0 auto;
+}
+
+.hero__stats {
+  display: flex;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.hero__stat-value {
+  display: block;
+  font-size: 22px;
+  color: var(--color-text);
+}
+
+.build-card {
+  padding: 20px;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.build-card__header,
+.build-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.build-card__title {
+  font-weight: 700;
+}
+
+.build-card__status {
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-success);
+  background: rgba(18, 146, 90, 0.12);
+  border-radius: 999px;
+}
+
+.build-card__list {
+  margin: 16px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.build-card__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 14px;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.build-card__price {
+  margin-left: auto;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.build-card__power {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.build-card__total {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+/* ---------- Акция (справа от первого экрана) ---------- */
+
+.promo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  color: #fff;
+  background: linear-gradient(160deg, #2563eb, #7c3aed);
+  border: 0;
+}
+
+.promo__label {
+  margin: 0 0 auto;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.promo__title {
+  margin: 24px 0 8px;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.promo__text {
+  margin: 0 0 16px;
+  opacity: 0.9;
+}
+
+.promo__link {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ---------- Категории: сетка 4 × 2 ---------- */
+
+.categories__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  height: 100%;
+  padding: 20px;
+  color: inherit;
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.category:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.category__name {
+  font-weight: 700;
+}
+
+.category__count {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* ---------- Готовые сборки: 3 колонки ---------- */
+
+.builds__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.build {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.build--popular {
+  border: 2px solid var(--color-primary);
+}
+
+.build__tag {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.build--popular .build__tag {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.build__title {
+  margin: 0 0 12px;
+  font-size: 22px;
+}
+
+.build__specs {
+  flex: 1;
+  margin: 0 0 20px;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+
+.build__specs li + li {
+  margin-top: 4px;
+}
+
+.build__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.build__price {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.build__link {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.build__link:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Популярное (боковая колонка) ---------- */
+
+.popular {
+  padding: 24px;
+  align-self: start;
+}
+
+.popular__list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.popular__item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.popular__item:last-child {
+  border-bottom: 0;
+}
+
+.popular__name {
+  display: block;
+  font-weight: 600;
+}
+
+.popular__price {
+  font-size: 14px;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* ---------- Как это работает: 3 колонки ---------- */
+
+.steps__list,
+.reviews__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  padding: 24px;
+}
+
+.step__number {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
+.step__title {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.step__text {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+/* ---------- Отзывы ---------- */
+
+.review {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.review__rating {
+  margin: 0 0 8px;
+  color: #f59e0b;
+  letter-spacing: 2px;
+}
+
+.review__text {
+  flex: 1;
+  margin: 0 0 12px;
+}
+
+.review__author {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* ---------- Подвал: сетка из 4 колонок ---------- */
+
+.site-footer {
+  color: #cbd5e1;
+  background: var(--color-header);
+}
+
+.site-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 24px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 24px;
+}
+
+.site-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.site-footer__title {
+  margin: 0 0 4px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #fff;
+}
+
+.site-footer__text {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.site-footer__link {
+  font-size: 15px;
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.site-footer__link:hover {
+  color: #fff;
+}
+
+.site-footer__copy {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 13px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   Планшет: 768–1023px — та же Grid, но 2 колонки и другие области
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  .home {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "hero    hero"
+      "cats    cats"
+      "builds  builds"
+      "promo   popular"
+      "steps   steps"
+      "reviews reviews";
+  }
+
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    padding: 32px;
+  }
+
+  .hero__title {
+    font-size: 32px;
+  }
+
+  .hero__stats {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .builds__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .site-footer__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header__inner {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header__nav {
+    display: block;
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .header__menu {
+    gap: 18px;
+    white-space: nowrap;
+  }
+}
+
+/* ==========================================================================
+   Телефон: до 767px — Grid отключаем, всё строим на FlexBox
+   ========================================================================== */
+
+@media (max-width: 767px) {
+  .header__button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .header__button:not(.header__button--accent) {
+    display: none;
+  }
+
+  .home {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 16px 40px;
+  }
+
+  .hero      { order: 1; }
+  .promo     { order: 2; }
+  .builds    { order: 3; }
+  .categories{ order: 4; }
+  .popular   { order: 5; }
+  .steps     { order: 6; }
+  .reviews   { order: 7; }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    padding: 24px 20px;
+  }
+
+  .hero__title {
+    font-size: 28px;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+  }
+
+  .hero__stats {
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .hero__stat-value {
+    font-size: 18px;
+  }
+
+  .promo {
+    padding: 24px 20px;
+  }
+
+  .promo__title {
+    margin-top: 12px;
+    font-size: 24px;
+  }
+
+  .categories__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .categories__list > li {
+    flex: 1 1 calc(50% - 6px);
+  }
+
+  .category {
+    padding: 16px;
+  }
+
+  .builds__list {
+    display: flex;
+    gap: 12px;
+    margin: 0 -16px;
+    padding: 0 16px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .build {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+
+  .steps__list,
+  .reviews__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .step {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 14px;
+    padding: 20px;
+  }
+
+  .step__number {
+    margin-bottom: 0;
+  }
+
+  .step__title {
+    flex: 1;
+    margin: 0;
+  }
+
+  .step__text {
+    flex-basis: 100%;
+    margin-top: 10px;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .site-footer__col:not(.site-footer__col--about) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 20px;
+  }
+
+  .site-footer__title {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .categories__list > li {
+    flex-basis: 100%;
+  }
+
+  .hero__stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

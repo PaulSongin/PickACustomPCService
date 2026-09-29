@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Сборка ПК онлайн: конструктор компьютера с автоматической проверкой совместимости, подсчётом цены и готовыми сборками.">
+  <title>Сборка ПК онлайн — конструктор компьютера</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/home.css">
+</head>
+<body class="page">
+
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__logo" href="index.html" aria-label="Сборка ПК онлайн — на главную">
+        <span class="header__logo-mark" aria-hidden="true">PC</span>
+        <span class="header__logo-text">Сборка ПК онлайн</span>
+      </a>
+      <nav class="header__nav" aria-label="Основная навигация">
+        <ul class="header__menu">
+          <li><a class="header__link" href="catalog.html">Каталог</a></li>
+          <li><a class="header__link" href="builder.html">Конструктор</a></li>
+          <li><a class="header__link" href="#builds">Готовые сборки</a></li>
+          <li><a class="header__link" href="#reviews">Отзывы</a></li>
+        </ul>
+      </nav>
+      <div class="header__actions">
+        <a class="header__button" href="login.html">Войти</a>
+        <a class="header__button header__button--accent" href="register.html">Регистрация</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="home">
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="hero__badge">Проверка совместимости в реальном времени</p>
+        <h1 class="hero__title" id="hero-title">Соберите компьютер своей мечты без ошибок</h1>
+        <p class="hero__text">
+          Выбирайте процессор, видеокарту и остальные комплектующие — конструктор сам проверит
+          сокеты, габариты и мощность блока питания и сразу посчитает цену.
+        </p>
+        <div class="hero__actions">
+          <a class="form__button form__button--primary" href="builder.html">Собрать ПК</a>
+          <a class="form__button form__button--secondary" href="#builds">Готовые сборки</a>
+        </div>
+        <ul class="hero__stats">
+          <li class="hero__stat"><strong class="hero__stat-value">2 400+</strong> комплектующих</li>
+          <li class="hero__stat"><strong class="hero__stat-value">18</strong> правил совместимости</li>
+          <li class="hero__stat"><strong class="hero__stat-value">24 ч</strong> на сборку заказа</li>
+        </ul>
+      </div>
+
+      <div class="hero__preview" aria-label="Пример сборки в конструкторе">
+        <div class="build-card">
+          <div class="build-card__header">
+            <span class="build-card__title">Ваша сборка</span>
+            <span class="build-card__status">Совместимо</span>
+          </div>
+          <ul class="build-card__list">
+            <li class="build-card__item"><span class="chip chip--cpu">CPU</span> AMD Ryzen 5 7600 <span class="build-card__price">620 BYN</span></li>
+            <li class="build-card__item"><span class="chip chip--mb">MB</span> MSI B650 Gaming Plus <span class="build-card__price">590 BYN</span></li>
+            <li class="build-card__item"><span class="chip chip--gpu">GPU</span> GeForce RTX 4060 Ti <span class="build-card__price">1 390 BYN</span></li>
+            <li class="build-card__item"><span class="chip chip--ram">RAM</span> 32 ГБ DDR5-6000 <span class="build-card__price">350 BYN</span></li>
+            <li class="build-card__item"><span class="chip chip--psu">PSU</span> 650 Вт 80+ Gold <span class="build-card__price">280 BYN</span></li>
+          </ul>
+          <div class="build-card__footer">
+            <span class="build-card__power">≈ 380 Вт</span>
+            <span class="build-card__total">3 230 BYN</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="promo" aria-labelledby="promo-title">
+      <p class="promo__label">Акция</p>
+      <h2 class="promo__title" id="promo-title">−10% в день рождения</h2>
+      <p class="promo__text">Зарегистрируйтесь, укажите дату рождения — и получите скидку на любую сборку.</p>
+      <a class="promo__link" href="register.html">Создать аккаунт →</a>
+    </aside>
+
+    <section class="categories" aria-labelledby="categories-title">
+      <h2 class="section-title" id="categories-title">Комплектующие</h2>
+      <ul class="categories__list">
+        <li><a class="category" href="catalog.html?cat=cpu"><span class="chip chip--cpu">CPU</span><span class="category__name">Процессоры</span><span class="category__count">214 товаров</span></a></li>
+        <li><a class="category" href="catalog.html?cat=gpu"><span class="chip chip--gpu">GPU</span><span class="category__name">Видеокарты</span><span class="category__count">386 товаров</span></a></li>
+        <li><a class="category" href="catalog.html?cat=mb"><span class="chip chip--mb">MB</span><span class="category__name">Материнские платы</span><span class="category__count">490 товаров</span></a></li>
+        <li><a class="category" href="catalog.html?cat=ram"><span class="chip chip--ram">RAM</span><span class="category__name">Оперативная память</span><span class="category__count">352 товара</span></a></li>
+        <li><a class="category" href="catalog.html?cat=ssd"><span class="chip chip--ssd">SSD</span><span class="category__name">Накопители</span><span class="category__count">418 товаров</span></a></li>
+        <li><a class="category" href="catalog.html?cat=psu"><span class="chip chip--psu">PSU</span><span class="category__name">Блоки питания</span><span class="category__count">197 товаров</span></a></li>
+        <li><a class="category" href="catalog.html?cat=case"><span class="chip chip--case">CASE</span><span class="category__name">Корпуса</span><span class="category__count">263 товара</span></a></li>
+        <li><a class="category" href="catalog.html?cat=cool"><span class="chip chip--cool">FAN</span><span class="category__name">Охлаждение</span><span class="category__count">145 товаров</span></a></li>
+      </ul>
+    </section>
+
+    <section class="builds" id="builds" aria-labelledby="builds-title">
+      <h2 class="section-title" id="builds-title">Готовые сборки</h2>
+      <div class="builds__list">
+        <article class="build">
+          <p class="build__tag">Для учёбы и офиса</p>
+          <h3 class="build__title">Старт</h3>
+          <ul class="build__specs">
+            <li>Intel Core i3-12100</li>
+            <li>Встроенная графика</li>
+            <li>16 ГБ DDR4</li>
+            <li>SSD 512 ГБ</li>
+          </ul>
+          <div class="build__bottom">
+            <span class="build__price">1 190 BYN</span>
+            <a class="build__link" href="builder.html?preset=start">В конструктор</a>
+          </div>
+        </article>
+
+        <article class="build build--popular">
+          <p class="build__tag">Хит · Игры в Full HD</p>
+          <h3 class="build__title">Геймер</h3>
+          <ul class="build__specs">
+            <li>AMD Ryzen 5 7600</li>
+            <li>GeForce RTX 4060 Ti</li>
+            <li>32 ГБ DDR5</li>
+            <li>SSD 1 ТБ NVMe</li>
+          </ul>
+          <div class="build__bottom">
+            <span class="build__price">3 230 BYN</span>
+            <a class="build__link" href="builder.html?preset=gamer">В конструктор</a>
+          </div>
+        </article>
+
+        <article class="build">
+          <p class="build__tag">Монтаж, 3D, стриминг</p>
+          <h3 class="build__title">Студия</h3>
+          <ul class="build__specs">
+            <li>AMD Ryzen 9 7900X</li>
+            <li>GeForce RTX 4070 Super</li>
+            <li>64 ГБ DDR5</li>
+            <li>SSD 2 ТБ NVMe</li>
+          </ul>
+          <div class="build__bottom">
+            <span class="build__price">6 450 BYN</span>
+            <a class="build__link" href="builder.html?preset=studio">В конструктор</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="popular" aria-labelledby="popular-title">
+      <h2 class="section-title" id="popular-title">Популярное сейчас</h2>
+      <ol class="popular__list">
+        <li class="popular__item"><span class="popular__name">Ryzen 7 7800X3D</span><span class="popular__price">1 290 BYN</span></li>
+        <li class="popular__item"><span class="popular__name">RTX 4070 Super</span><span class="popular__price">2 150 BYN</span></li>
+        <li class="popular__item"><span class="popular__name">Kingston Fury 32 ГБ</span><span class="popular__price">340 BYN</span></li>
+        <li class="popular__item"><span class="popular__name">Samsung 990 Pro 1 ТБ</span><span class="popular__price">380 BYN</span></li>
+        <li class="popular__item"><span class="popular__name">be quiet! Pure Power 12</span><span class="popular__price">310 BYN</span></li>
+      </ol>
+    </aside>
+
+    <section class="steps" aria-labelledby="steps-title">
+      <h2 class="section-title" id="steps-title">Как это работает</h2>
+      <ol class="steps__list">
+        <li class="step">
+          <span class="step__number">1</span>
+          <h3 class="step__title">Выберите комплектующие</h3>
+          <p class="step__text">По очереди добавляйте детали — в списке остаются только совместимые.</p>
+        </li>
+        <li class="step">
+          <span class="step__number">2</span>
+          <h3 class="step__title">Проверьте сборку</h3>
+          <p class="step__text">Конструктор посчитает цену и энергопотребление и предупредит о проблемах.</p>
+        </li>
+        <li class="step">
+          <span class="step__number">3</span>
+          <h3 class="step__title">Оформите заказ</h3>
+          <p class="step__text">Менеджер свяжется с вами, соберёт и протестирует компьютер за 24 часа.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+      <h2 class="section-title" id="reviews-title">Отзывы</h2>
+      <div class="reviews__list">
+        <article class="review">
+          <p class="review__rating" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p class="review__text">Собрал первый игровой ПК сам: конструктор сразу сказал, что кулер не влезет в корпус.</p>
+          <p class="review__author">Пример отзыва · сборка «Геймер»</p>
+        </article>
+        <article class="review">
+          <p class="review__rating" aria-label="Оценка 5 из 5">★★★★★</p>
+          <p class="review__text">Удобно, что цена и мощность блока питания пересчитываются при каждом изменении.</p>
+          <p class="review__author">Пример отзыва · своя сборка</p>
+        </article>
+        <article class="review">
+          <p class="review__rating" aria-label="Оценка 4 из 5">★★★★☆</p>
+          <p class="review__text">Взял «Студию» под монтаж, заменил только SSD. Заказ подтвердили в Telegram за час.</p>
+          <p class="review__author">Пример отзыва · сборка «Студия»</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__col site-footer__col--about">
+        <a class="header__logo" href="index.html">
+          <span class="header__logo-mark" aria-hidden="true">PC</span>
+          <span class="header__logo-text">Сборка ПК онлайн</span>
+        </a>
+        <p class="site-footer__text">Учебный проект: конструктор ПК с проверкой совместимости.</p>
+      </div>
+      <nav class="site-footer__col" aria-label="Разделы">
+        <h2 class="site-footer__title">Разделы</h2>
+        <a class="site-footer__link" href="catalog.html">Каталог</a>
+        <a class="site-footer__link" href="builder.html">Конструктор</a>
+        <a class="site-footer__link" href="#builds">Готовые сборки</a>
+      </nav>
+      <nav class="site-footer__col" aria-label="Аккаунт">
+        <h2 class="site-footer__title">Аккаунт</h2>
+        <a class="site-footer__link" href="login.html">Вход</a>
+        <a class="site-footer__link" href="register.html">Регистрация</a>
+      </nav>
+      <div class="site-footer__col">
+        <h2 class="site-footer__title">Контакты</h2>
+        <a class="site-footer__link" href="tel:+375291234567">+375 29 123-45-67</a>
+        <a class="site-footer__link" href="https://t.me/">Telegram</a>
+      </div>
+    </div>
+    <p class="site-footer__copy">© 2026 Сборка ПК онлайн</p>
+  </footer>
+
+</body>
+</html>
