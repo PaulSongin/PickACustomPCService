@@ -1,0 +1,8 @@
+{
+  "name": "pcbuild-bot",
+  "version": "1.0.0",
+  "description": "Telegram-бот и сервер заказов для PCBUILD",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}

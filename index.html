@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCBUILD — собери свой компьютер</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ШАПКА: общая для всех страниц, не перерисовывается -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="#/" class="logo">PC<span>BUILD</span></a>
+
+    <button class="burger" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Открыть меню">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#/catalog" class="btn btn--accent btn--nav">Каталог</a>
+      <a href="#/builder" class="btn btn--accent btn--nav">Конструктор</a>
+      <a href="#/recommendations" class="btn btn--accent btn--nav">Рекомендации</a>
+      <a href="#/reviews" class="btn btn--accent btn--nav">Отзывы</a>
+    </nav>
+
+    <a href="#/builder" class="btn btn--accent header-cta">Собрать ПК</a>
+  </div>
+</header>
+
+<!-- СТРАНИЦЫ: показывается одна, остальные скрыты -->
+<main id="app">
+
+<section class="page" data-page="index" tabindex="-1" hidden>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__grid">
+      <div class="hero__text">
+        <h1>Собери компьютер,<br>который точно заработает</h1>
+        <p class="hero__subtitle">
+          Выбирайте процессор, видеокарту, корпус и другие детали — мы проверим
+          совместимость каждого компонента и посчитаем итоговую цену сразу.
+        </p>
+        <div class="hero__actions">
+          <a href="#/builder" class="btn btn--light btn--lg">Начать сборку</a>
+          <a href="#/recommendations" class="btn btn--light btn--lg">Готовые сборки</a>
+        </div>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__value">50+</span>
+          <span class="stat__label">комплектующих в каталоге</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value">100%</span>
+          <span class="stat__label">проверка совместимости</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value">1 клик</span>
+          <span class="stat__label">до отправки заказа</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРЕИМУЩЕСТВА -->
+  <section class="section features">
+    <h2 class="section__title">Почему через конструктор проще</h2>
+
+    <div class="features__grid">
+      <article class="feature-card">
+        <h3>Проверка совместимости</h3>
+        <p>Сокет процессора, форм-фактор платы, мощность блока питания — система сама отсеет то, что не подойдёт.</p>
+      </article>
+
+      <article class="feature-card">
+        <h3>Цена в реальном времени</h3>
+        <p>Итоговая стоимость сборки пересчитывается при каждом выборе компонента, без скрытых доплат.</p>
+      </article>
+
+      <article class="feature-card">
+        <h3>Заказ в Telegram</h3>
+        <p>Готовую сборку отправляем напрямую нашим менеджерам — свяжемся с вами для подтверждения.</p>
+      </article>
+
+      <article class="feature-card">
+        <h3>Отзывы покупателей</h3>
+        <p>Реальный опыт людей, которые уже собрали технику через наш сервис.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ПОПУЛЯРНЫЕ СБОРКИ -->
+  <section class="section builds">
+    <h2 class="section__title">Популярные сборки</h2>
+
+    <div class="builds__grid">
+      <article class="build-card">
+        <span class="build-card__tag">Бюджетная</span>
+        <h3>Для учёбы и лёгких игр</h3>
+        <p class="build-card__specs" data-preset-specs="budget">Ryzen 5 5600 · GeForce RTX 5050 · DDR4 16 ГБ · SSD 1 ТБ</p>
+        <div class="build-card__footer">
+          <span class="build-card__price" data-preset-price="budget">от 4 110 BYN</span>
+          <a href="#/builder?preset=budget" class="btn btn--light">Подробнее</a>
+        </div>
+      </article>
+
+      <article class="build-card build-card--highlight">
+        <span class="build-card__tag">Игровая</span>
+        <h3>Для современных игр</h3>
+        <p class="build-card__specs" data-preset-specs="gaming">Ryzen 7 7700 · GeForce RTX 5070 · DDR5 32 ГБ · SSD 1 ТБ</p>
+        <div class="build-card__footer">
+          <span class="build-card__price" data-preset-price="gaming">от 9 070 BYN</span>
+          <a href="#/builder?preset=gaming" class="btn btn--light">Подробнее</a>
+        </div>
+      </article>
+
+      <article class="build-card">
+        <span class="build-card__tag">Для стриминга</span>
+        <h3>Игры + запись + монтаж</h3>
+        <p class="build-card__specs" data-preset-specs="stream">Ryzen 9 7900 · GeForce RTX 5060 Ti · DDR5 32 ГБ · SSD 2 ТБ</p>
+        <div class="build-card__footer">
+          <span class="build-card__price" data-preset-price="stream">от 9 700 BYN</span>
+          <a href="#/builder?preset=stream" class="btn btn--light">Подробнее</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- КАК ЭТО РАБОТАЕТ -->
+  <section class="section steps">
+    <h2 class="section__title">Как оформить заказ</h2>
+
+    <div class="steps__grid">
+      <div class="step">
+        <span class="step__number">1</span>
+        <h3>Выберите комплектующие</h3>
+        <p>Соберите конфигурацию сами или возьмите готовую сборку за основу.</p>
+      </div>
+
+      <div class="step">
+        <span class="step__number">2</span>
+        <h3>Проверьте сборку</h3>
+        <p>Система покажет совместимость и итоговую стоимость — ничего считать вручную не нужно.</p>
+      </div>
+
+      <div class="step">
+        <span class="step__number">3</span>
+        <h3>Отправьте заказ</h3>
+        <p>Заявка уходит нашим менеджерам в Telegram — мы свяжемся с вами для подтверждения.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ОТЗЫВЫ -->
+  <section class="section reviews">
+    <h2 class="section__title">Что говорят покупатели</h2>
+
+    <div class="reviews__grid">
+      <article class="review-card">
+        <span class="review-card__stars" aria-label="Оценка 5 из 5">★★★★★</span>
+        <p class="review-card__text">Собрал игровую сборку за полчаса, все детали подошли друг к другу сразу — не пришлось ничего гуглить.</p>
+        <span class="review-card__author">Андрей К.</span>
+      </article>
+
+      <article class="review-card">
+        <span class="review-card__stars" aria-label="Оценка 5 из 5">★★★★★</span>
+        <p class="review-card__text">Удобно, что сразу видно итоговую цену. Заказ оформил через сайт, менеджер написал в тот же день.</p>
+        <span class="review-card__author">Марина С.</span>
+      </article>
+
+      <article class="review-card">
+        <span class="review-card__stars" aria-label="Оценка 4 из 5">★★★★☆</span>
+        <p class="review-card__text">Не разбираюсь в железе, взял готовую сборку из рекомендаций — всё работает отлично.</p>
+        <span class="review-card__author">Дмитрий В.</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <h2>Готовы собрать свой компьютер?</h2>
+    <p>Начните с конструктора — это займёт пару минут.</p>
+    <a href="#/builder" class="btn btn--light btn--lg">Перейти к конструктору</a>
+  </section>
+</section>
+
+<section class="page" data-page="catalog" tabindex="-1" hidden>
+  <div class="page-head">
+    <h1>Каталог комплектующих</h1>
+    <p>Выберите деталь и добавьте её в сборку. Детали, которые не подходят к уже выбранным, выделены серым.</p>
+  </div>
+
+  <div class="catalog">
+    <aside class="filters panel">
+      <div>
+        <h3>Поиск</h3>
+        <input type="search" id="search" placeholder="Название или параметры">
+      </div>
+      <div>
+        <h3>Категория</h3>
+        <label><input type="checkbox" data-cat="cpu" checked> Процессоры</label>
+        <label><input type="checkbox" data-cat="mb" checked> Материнские платы</label>
+        <label><input type="checkbox" data-cat="gpu" checked> Видеокарты</label>
+        <label><input type="checkbox" data-cat="ram" checked> Оперативная память</label>
+        <label><input type="checkbox" data-cat="cooler" checked> Охлаждение</label>
+        <label><input type="checkbox" data-cat="case" checked> Корпуса</label>
+        <label><input type="checkbox" data-cat="psu" checked> Блоки питания</label>
+        <label><input type="checkbox" data-cat="ssd" checked> Накопители</label>
+      </div>
+      <div>
+        <h3>Цена, BYN</h3>
+        <div class="filters__price">
+          <input type="number" id="priceMin" placeholder="от" min="0">
+          <input type="number" id="priceMax" placeholder="до" min="0">
+        </div>
+      </div>
+    </aside>
+
+    <div class="products" id="products"></div>
+  </div>
+</section>
+
+<section class="page" data-page="builder" tabindex="-1" hidden>
+  <div class="page-head">
+    <h1>Конструктор ПК</h1>
+    <p>Выбирайте комплектующие — совместимость и цена считаются автоматически.</p>
+  </div>
+
+  <div class="builder">
+    <div class="slots" id="slots"></div>
+
+    <aside class="summary panel">
+      <h2>Ваша сборка</h2>
+      <div class="summary__row"><span>Выбрано деталей</span><span id="sumCount">0 из 8</span></div>
+      <div class="summary__row"><span>Совместимость</span><span class="summary__ok" id="sumCompat">Без конфликтов</span></div>
+      <ul class="summary__errors" id="sumErrors"></ul>
+      <div class="summary__total"><span>Итого</span><span id="sumTotal">0 BYN</span></div>
+
+      <form class="summary__form" id="orderForm" novalidate>
+        <label class="field">Имя<input type="text" id="custName" placeholder="Как к вам обращаться"></label>
+        <label class="field">Телефон
+          <span class="phone">
+            <span class="phone__prefix">+375-</span>
+            <input type="tel" id="phone" inputmode="numeric" placeholder="29-123-45-67" autocomplete="off">
+          </span>
+        </label>
+        <button type="submit" class="btn btn--light btn--lg">Оформить заказ</button>
+        <p class="form-msg" id="orderMsg"></p>
+      </form>
+    </aside>
+  </div>
+</section>
+
+<section class="page" data-page="recommendations" tabindex="-1" hidden>
+  <div class="page-head">
+    <h1>Готовые сборки</h1>
+    <p>Подберите компьютер под бюджет и задачи.</p>
+  </div>
+
+  <section class="section">
+    <div class="chips" id="recsChips">
+      <button class="btn btn--accent" data-min="0" data-max="">Все</button>
+      <button class="btn btn--light" data-min="0" data-max="4500">до 4 500 BYN</button>
+      <button class="btn btn--light" data-min="4500" data-max="9500">4 500 – 9 500 BYN</button>
+      <button class="btn btn--light" data-min="9500" data-max="">от 9 500 BYN</button>
+    </div>
+
+    <div class="builds__grid" id="recs"></div>
+  </section>
+</section>
+
+<section class="page" data-page="reviews" tabindex="-1" hidden>
+  <div class="page-head">
+    <h1>Отзывы покупателей</h1>
+    <p>Реальный опыт людей, которые уже собрали ПК через наш сервис.</p>
+  </div>
+
+  <div class="rv-layout">
+    <div>
+      <div class="rv-summary panel">
+        <span class="rv-summary__score" id="rvScore">0,0</span>
+        <div>
+          <span class="review-card__stars" id="rvStars"></span>
+          <p id="rvCount"></p>
+        </div>
+      </div>
+      <div class="rv-list" id="rvList"></div>
+    </div>
+
+    <form class="rv-form panel" id="rvForm" novalidate>
+      <h2>Оставить отзыв</h2>
+      <label class="field">Имя<input type="text" name="rvName" placeholder="Ваше имя"></label>
+      <label class="field">Оценка
+        <select name="rvRating">
+          <option value="5">5 — отлично</option>
+          <option value="4">4 — хорошо</option>
+          <option value="3">3 — нормально</option>
+          <option value="2">2 — плохо</option>
+          <option value="1">1 — ужасно</option>
+        </select>
+      </label>
+      <label class="field">Отзыв<textarea name="rvText" placeholder="Расскажите о своём опыте"></textarea></label>
+      <button type="submit" class="btn btn--light btn--lg">Отправить</button>
+      <p class="form-msg" id="rvMsg"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ПОДВАЛ: общий для всех страниц -->
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="footer-col">
+      <a href="#/" class="logo">PC<span>BUILD</span></a>
+      <p>Сервис для сборки компьютера под ваши задачи и бюджет.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Разделы</h4>
+      <a href="#/catalog">Каталог</a>
+      <a href="#/builder">Конструктор</a>
+      <a href="#/recommendations">Рекомендации</a>
+      <a href="#/reviews">Отзывы</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="https://t.me/pcbuild_support">Telegram-поддержка</a>
+      <a href="mailto:info@pcbuild.by">info@pcbuild.by</a>
+    </div>
+  </div>
+
+  <p class="site-footer__bottom">© 2026 PCBUILD. Все права защищены.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/index.js"></script>
+<script src="js/catalog.js"></script>
+<script src="js/builder.js"></script>
+<script src="js/recommendations.js"></script>
+<script src="js/reviews.js"></script>
+<script src="js/router.js"></script>
+</body>
+</html>
