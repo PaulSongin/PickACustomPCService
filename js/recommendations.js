@@ -9,10 +9,10 @@ PAGES.recommendations = (function () {
     });
     grid.innerHTML = items.length ? items.map(function (p) {
       return '<article class="build-card' + (p.id === 'gaming' ? ' build-card' : '') + '">' +
-        '<span class="build-card__tag">' + p.tag + '</span><h3>' + p.title + '</h3>' +
-        '<p class="build-card__specs">' + presetSpecs(p) + '</p>' +
+        '<span class="build-card__tag">' + esc(p.tag) + '</span><h3>' + esc(p.title) + '</h3>' +
+        '<p class="build-card__specs">' + esc(presetSpecs(p)) + '</p>' +
         '<div class="build-card__footer"><span class="build-card__price">от ' + fmt(buildTotal(p.items)) + '</span>' +
-        '<a href="#/builder?preset=' + p.id + '" class="btn btn--light">Подробнее</a></div></article>';
+        '<a href="#/builder?preset=' + encodeURIComponent(p.id) + '" class="btn btn--light">Подробнее</a></div></article>';
     }).join('') : '<p class="empty">В этом диапазоне пока нет сборок.</p>';
   }
 

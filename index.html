@@ -159,7 +159,7 @@
   <section class="section reviews">
     <h2 class="section__title">Что говорят покупатели</h2>
 
-    <div class="reviews__grid">
+    <div class="reviews__grid" id="homeReviews">
       <article class="review-card">
         <span class="review-card__stars" aria-label="Оценка 5 из 5">★★★★★</span>
         <p class="review-card__text">Собрал игровую сборку за полчаса, все детали подошли друг к другу сразу — не пришлось ничего гуглить.</p>
@@ -240,6 +240,9 @@
       <ul class="summary__errors" id="sumErrors"></ul>
       <div class="summary__total"><span>Итого</span><span id="sumTotal">0 BYN</span></div>
 
+      <button type="button" class="btn btn--light" id="shareBtn">Поделиться сборкой</button>
+      <p class="form-msg form-msg--wrap" id="shareMsg"></p>
+
       <form class="summary__form" id="orderForm" novalidate>
         <label class="field">Имя<input type="text" id="custName" placeholder="Как к вам обращаться"></label>
         <label class="field">Телефон
@@ -303,7 +306,9 @@
           <option value="1">1 — ужасно</option>
         </select>
       </label>
-      <label class="field">Отзыв<textarea name="rvText" placeholder="Расскажите о своём опыте"></textarea></label>
+      <label class="field">Отзыв<textarea name="rvText" placeholder="Расскажите о своём опыте" maxlength="1000"></textarea></label>
+      <!-- ловушка для спам-ботов: человек это поле не видит и не заполняет -->
+      <label class="hp" aria-hidden="true">Сайт<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
       <button type="submit" class="btn btn--light btn--lg">Отправить</button>
       <p class="form-msg" id="rvMsg"></p>
     </form>
@@ -338,6 +343,7 @@
   <p class="site-footer__bottom">© 2026 PCBUILD. Все права защищены.</p>
 </footer>
 
+<script src="js/api.js"></script>
 <script src="js/data.js"></script>
 <script src="js/index.js"></script>
 <script src="js/catalog.js"></script>
