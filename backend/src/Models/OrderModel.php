@@ -11,18 +11,35 @@ final class OrderModel
 {
     private const ACTIVE = "status NOT IN ('done', 'rejected')";
 
+    /** Диапазон номеров заказов: 6-значные числа */
+    private const NUMBER_MIN = 100000;
+    private const NUMBER_MAX = 999999;
+
     /**
      * Создать заказ вместе с составом и первой записью истории (в одной транзакции).
+     * Номер заказа — случайный, а не следующий по счёту: по нему нельзя узнать количество заказов.
      * @param array{token:string, name:string, phone:string, total:float, ip:string} $order
      * @param list<array{cat:string, pk:int, name:string, price:float}> $items
      */
     public function create(array $order, array $items): int
     {
         return Database::transaction(static function (PDO $pdo) use ($order, $items): int {
-            $pdo->prepare(
-                'INSERT INTO orders (public_token, customer_name, phone, total, ip_address) VALUES (?, ?, ?, ?, ?)'
-            )->execute([$order['token'], $order['name'], $order['phone'], $order['total'], $order['ip']]);
-            $id = (int) $pdo->lastInsertId();
+            $insert = $pdo->prepare(
+                'INSERT INTO orders (id, public_token, customer_name, phone, total, ip_address) VALUES (?, ?, ?, ?, ?, ?)'
+            );
+            for ($attempt = 1; ; $attempt++) {
+                $id = random_int(self::NUMBER_MIN, self::NUMBER_MAX);
+                try {
+                    $insert->execute([$id, $order['token'], $order['name'], $order['phone'], $order['total'], $order['ip']]);
+                    break;
+                } catch (\PDOException $e) {
+                    // такой номер уже занят — берём другой
+                    $taken = $e->getCode() === '23000' && str_contains($e->getMessage(), 'PRIMARY');
+                    if (!$taken || $attempt >= 20) {
+                        throw $e;
+                    }
+                }
+            }
 
             $stmt = $pdo->prepare(
                 'INSERT INTO order_items (order_id, category_code, product_id, product_name, price) VALUES (?, ?, ?, ?, ?)'
@@ -73,7 +90,7 @@ final class OrderModel
     /** Последние активные заказы (от старых к новым) */
     public function active(int $limit = 10): array
     {
-        $stmt = Database::pdo()->prepare('SELECT id FROM orders WHERE ' . self::ACTIVE . ' ORDER BY id DESC LIMIT ?');
+        $stmt = Database::pdo()->prepare('SELECT id FROM orders WHERE ' . self::ACTIVE . ' ORDER BY created_at DESC, id DESC LIMIT ?');
         $stmt->bindValue(1, $limit, PDO::PARAM_INT);
         $stmt->execute();
         $ids = array_reverse(array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN)));
@@ -83,7 +100,7 @@ final class OrderModel
     /** Заказы, привязанные к Telegram-чату клиента */
     public function byClientChat(int $chatId, bool $onlyActive = false): array
     {
-        $sql = 'SELECT id, status, total FROM orders WHERE client_chat_id = ?' . ($onlyActive ? ' AND ' . self::ACTIVE : '') . ' ORDER BY id';
+        $sql = 'SELECT id, status, total FROM orders WHERE client_chat_id = ?' . ($onlyActive ? ' AND ' . self::ACTIVE : '') . ' ORDER BY created_at, id';
         $stmt = Database::pdo()->prepare($sql);
         $stmt->execute([$chatId]);
         return array_map(static fn (array $r): array => [

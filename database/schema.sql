@@ -172,8 +172,10 @@ CREATE TABLE build_items (
 --  Заказы
 -- ---------------------------------------------------------------------
 
+-- Номер заказа — случайное 6-значное число (задаётся в OrderModel::create), а не счётчик:
+-- по номеру своего заказа нельзя узнать, сколько заказов было у магазина.
 CREATE TABLE orders (
-  id             INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+  id             INT UNSIGNED  NOT NULL COMMENT 'случайный номер 100000–999999',
   public_token   CHAR(24)      NOT NULL COMMENT 'для ссылки t.me/<бот>?start=<token> и GET /api/orders/<token>',
   customer_name  VARCHAR(60)   NOT NULL,
   phone          VARCHAR(20)   NOT NULL,
@@ -190,6 +192,7 @@ CREATE TABLE orders (
   UNIQUE KEY uq_orders_token (public_token),
   KEY ix_orders_status (status),
   KEY ix_orders_client_chat (client_chat_id),
+  KEY ix_orders_created (created_at),
   CONSTRAINT ck_orders_total CHECK (total >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
