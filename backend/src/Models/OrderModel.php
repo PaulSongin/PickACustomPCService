@@ -127,12 +127,12 @@ final class OrderModel
      * Защищает от гонки: если два сборщика одновременно нажали «Принять», успешным будет только один.
      *
      * @param array<string, int|string|null> $set   доп. поля: builder_tg_id, builder_name, reject_reason
-     * @param array<string, int|string>      $where доп. условия: builder_tg_id
+     * @param array<string, int|string>      $where доп. условия: builder_tg_id или client_chat_id
      */
     public function transition(int $id, string $from, string $to, array $set = [], array $where = [], ?string $by = null, ?string $comment = null): bool
     {
         $allowedSet = ['builder_tg_id', 'builder_name', 'reject_reason'];
-        $allowedWhere = ['builder_tg_id'];
+        $allowedWhere = ['builder_tg_id', 'client_chat_id'];
 
         $sql = 'UPDATE orders SET status = ?';
         $params = [$to];

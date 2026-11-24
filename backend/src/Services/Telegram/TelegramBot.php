@@ -172,6 +172,8 @@ final class TelegramBot
             }
             $this->send($chat, "✅ Заказ №{$order['id']} привязан. Статус: " . OrderStatus::label($order['status'])
                 . "\nМы сообщим здесь о каждом изменении. Есть вопросы — просто напишите сообщение.", ['reply_markup' => self::MENU]);
+            // Клиент получает только информацию о своём заказе, без inline-кнопок сборщика.
+            $this->sendClientOrder($chat, $order);
             return;
         }
         $this->send($chat, "Здравствуйте! Это бот PCBUILD.\n📦 «Мои заказы» — статусы ваших заказов\n💬 Любое сообщение уйдёт в поддержку.",
@@ -184,10 +186,16 @@ final class TelegramBot
 
         if ($text === '/orders' || $text === '📦 Мои заказы') {
             $mine = $this->orders->byClientChat($chat);
-            $this->send($chat, $mine
-                ? implode("\n", array_map(static fn (array $o): string => "№{$o['id']} — " . OrderStatus::label($o['status'])
-                    . ' — ' . Format::moneyText($o['total']), $mine))
-                : 'Привязанных заказов пока нет. Оформите заказ на сайте и перейдите по ссылке после оформления.');
+            if (!$mine) {
+                $this->send($chat, 'Привязанных заказов пока нет. Оформите заказ на сайте и перейдите по ссылке после оформления.');
+                return;
+            }
+            foreach ($mine as $item) {
+                $order = $this->orders->find((int) $item['id']);
+                if ($order !== null) {
+                    $this->sendClientOrder($chat, $order);
+                }
+            }
             return;
         }
         if ($text === '💬 Поддержка') {
@@ -307,13 +315,45 @@ final class TelegramBot
                 'callback_query_id' => (string) $q['id'], 'text' => $text, 'show_alert' => $alert,
             ]));
         };
+        [$action, $id] = array_pad(explode(':', (string) ($q['data'] ?? ''), 2), 2, '0');
+        $id = (int) $id;
+        $chat = (int) ($q['message']['chat']['id'] ?? 0);
+
+        // Подтвердить получение может только Telegram-чат, к которому привязан заказ.
+        if ($action === 'client_done') {
+            $order = $this->orders->find($id);
+            if ($order === null) {
+                $answer('Заказ не найден', true);
+                return;
+            }
+            if ($chat <= 0 || $uid !== $chat || $order['client_chat_id'] !== $chat || $order['status'] !== 'delivery') {
+                $answer('Подтверждение недоступно для этого заказа', true);
+                return;
+            }
+            $ok = $this->orders->transition(
+                $id,
+                'delivery',
+                'done',
+                [],
+                ['client_chat_id' => $chat],
+                'клиент'
+            );
+            if (!$ok) {
+                $answer('Статус уже изменён', true);
+                return;
+            }
+            $order = $this->orders->find($id);
+            $this->refreshOrder($order);
+            $answer('Получение подтверждено');
+            $this->sendClientOrder($chat, $order);
+            return;
+        }
+
         if (!$this->isBuilder($uid)) {
             $answer('Нет доступа', true);
             return;
         }
 
-        [$action, $id] = array_pad(explode(':', (string) ($q['data'] ?? ''), 2), 2, '0');
-        $id = (int) $id;
         $name = $this->nameOf($q['from']);
 
         if ($action === 'rv_ok' || $action === 'rv_no') {
@@ -358,6 +398,10 @@ final class TelegramBot
                 $this->send($uid, "Напишите причину отказа по заказу №$id одним сообщением (или /cancel).");
                 return;
 
+            case 'wait':
+                $answer('Ожидаем подтверждение клиента');
+                return;
+
             case 'next': // следующий статус — только у своего заказа
                 if ($order['builder_tg_id'] !== $uid) {
                     $answer('Заказ ведёт другой сборщик', true);
@@ -375,6 +419,9 @@ final class TelegramBot
                 $order = $this->orders->find($id);
                 $this->notifyClient($order, sprintf(OrderStatus::CLIENT_TEXT[$next[0]], $id));
                 $this->refreshOrder($order);
+                if ($next[0] === 'delivery' && $order['client_chat_id'] !== null) {
+                    $this->sendClientOrder((int) $order['client_chat_id'], $order);
+                }
                 $answer('Статус обновлён');
                 return;
         }
@@ -405,6 +452,8 @@ final class TelegramBot
             $text .= "\n\n👷 Ведёт: " . Format::html((string) $o['builder_name']);
         }
 
+        // Статусные кнопки доступны только сборщику, который ведёт заказ.
+        // Клиентские сообщения отправляются отдельно и никогда не получают эту клавиатуру.
         $keyboard = [];
         if ($o['status'] === 'new') {
             $keyboard = [[
@@ -412,9 +461,41 @@ final class TelegramBot
                 ['text' => '❌ Отклонить', 'callback_data' => 'no:' . $o['id']],
             ]];
         } elseif ($mine && isset(OrderStatus::NEXT[$o['status']])) {
-            $keyboard = [[['text' => OrderStatus::NEXT[$o['status']][1], 'callback_data' => 'next:' . $o['id']]]];
+            if ($o['status'] === 'delivery' && $o['client_chat_id'] !== null) {
+                $keyboard = [[['text' => '⏳ Ожидает подтверждения клиента', 'callback_data' => 'wait:' . $o['id']]]];
+            } else {
+                $keyboard = [[['text' => OrderStatus::NEXT[$o['status']][1], 'callback_data' => 'next:' . $o['id']]]];
+            }
         }
         return ['text' => $text, 'reply_markup' => ['inline_keyboard' => $keyboard]];
+    }
+
+    /** Карточка для клиента: статус и состав без кнопок управления заказом. */
+    private function sendClientOrder(int $chat, array $o): void
+    {
+        $lines = array_map(
+            static fn (array $i): string => Format::html($i['category_name'] . ': ' . $i['product_name'] . ' — ' . Format::moneyText($i['price'])),
+            $o['items']
+        );
+        $text = "📦 <b>Ваш заказ №{$o['id']}</b>\n"
+            . 'Статус: ' . OrderStatus::label($o['status'])
+            . "\n\n" . implode("\n", $lines)
+            . "\n\n<b>Итого: " . Format::moneyText($o['total']) . '</b>';
+        if ($o['reject_reason']) {
+            $text .= "\n\n❗ Причина отказа: " . Format::html($o['reject_reason']);
+        }
+        $keyboard = [];
+        if ($o['status'] === 'delivery' && $o['client_chat_id'] === $chat) {
+            $keyboard = [[[
+                'text' => '✅ Подтвердить получение',
+                'callback_data' => 'client_done:' . $o['id'],
+            ]]];
+        }
+        $this->send($chat, $text, [
+            'reply_markup' => $keyboard
+                ? ['inline_keyboard' => $keyboard]
+                : self::MENU,
+        ]);
     }
 
     private function showOrder(int $chat, array $order): void

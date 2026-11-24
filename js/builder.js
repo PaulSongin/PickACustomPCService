@@ -121,8 +121,13 @@ PAGES.builder = (function () {
           saveBuild({});
           form.reset();
           render();
-          if (res.trackUrl) setMsgLink(msg, 'Заказ №' + res.id + ' принят.', res.trackUrl, 'Следить за заказом в Telegram', true);
-          else setMsg(msg, 'Заказ №' + res.id + ' принят. Менеджер свяжется с вами по телефону.', 'ok');
+          if (res.trackUrl) {
+            setMsgLink(msg, 'Заказ №' + res.id + ' принят. Открываем Telegram…', res.trackUrl, 'Открыть бота вручную', true);
+            // Deep link сразу запускает Telegram и передаёт боту секретный токен заказа.
+            window.location.assign(res.trackUrl);
+          } else {
+            setMsg(msg, 'Заказ №' + res.id + ' принят. Менеджер свяжется с вами по телефону.', 'ok');
+          }
         })
         .catch(function (err) {
           if (err.status === 409 || (err.status === 422 && /наличии|снят/.test(err.message))) {
