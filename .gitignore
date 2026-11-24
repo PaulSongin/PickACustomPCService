@@ -1,0 +1,8 @@
+# настройки с паролем от БД и токеном бота
+backend/config/config.php
+
+# логи
+backend/storage/logs/*.log
+
+.idea/
+.vscode/

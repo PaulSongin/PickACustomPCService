@@ -18,12 +18,12 @@ PAGES.catalog = (function () {
       var inBuild = build[p.cat] === p.id;
       var reason = inBuild ? '' : incompatReason(p, build);
       return '<article class="product' + (reason ? ' product--off' : '') + '">' +
-        (imgOf(p) ? '<div class="product__img"><img src="' + imgOf(p) + '" alt="' + p.name + '" loading="lazy"></div>' : '') +
-        '<h3>' + p.name + '</h3><p>' + p.spec + '</p>' +
-        (reason ? '<p class="product__warn">' + reason + '</p>' : '') +
+        (imgOf(p) ? '<div class="product__img"><img src="' + esc(imgOf(p)) + '" alt="' + esc(p.name) + '" loading="lazy"></div>' : '') +
+        '<h3>' + esc(p.name) + '</h3><p>' + esc(p.spec) + '</p>' +
+        (reason ? '<p class="product__warn">' + esc(reason) + '</p>' : '') +
         '<div class="product__foot"><span class="product__price">' + fmt(p.price) + '</span>' +
         '<button class="btn btn--light" data-id="' + p.id + '"' + (reason ? ' disabled' : '') + '>' +
-        (reason ? 'Несовместимо' : (inBuild ? 'В сборке' : 'В сборку')) + '</button></div></article>';
+        (reason ? (p.stock === 0 ? 'Нет в наличии' : 'Несовместимо') : (inBuild ? 'В сборке' : 'В сборку')) + '</button></div></article>';
     }).join('') : '<p class="empty">Ничего не найдено — измените поиск или фильтры.</p>';
   }
 

@@ -42,12 +42,36 @@
     sections[name].focus({ preventScroll: true });
   }
 
-  window.addEventListener('hashchange', route);
+  // Каталог приходит из базы данных: страницы показываем, когда он загружен
+  var ready = false;
+  function start() {
+    ready = true;
+    window.addEventListener('hashchange', route);
+    route();
+  }
+
+  function showLoadError(err) {
+    var app = document.getElementById('app');
+    var box = document.createElement('section');
+    box.className = 'page-head';
+    var h = document.createElement('h1');
+    h.textContent = 'Не удалось загрузить каталог';
+    var p = document.createElement('p');
+    p.textContent = location.protocol === 'file:'
+      ? 'Сайт открыт как файл. Запустите сервер (php -S localhost:8000 router.php) и откройте http://localhost:8000'
+      : err.message;
+    var btn = document.createElement('button');
+    btn.className = 'btn btn--light';
+    btn.textContent = 'Повторить';
+    btn.addEventListener('click', function () { location.reload(); });
+    box.append(h, p, btn);
+    app.prepend(box);
+  }
 
   // нажатие на ссылку на ту же самую страницу: обновить страницу и вернуться наверх
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href^="#/"]');
-    if (a && a.getAttribute('href') === (location.hash || '#/')) { e.preventDefault(); route(); }
+    if (ready && a && a.getAttribute('href') === (location.hash || '#/')) { e.preventDefault(); route(); }
   });
 
   toggle.addEventListener('click', function () {
@@ -56,5 +80,5 @@
     toggle.setAttribute('aria-expanded', open);
   });
 
-  route();
+  loadCatalog().then(start, showLoadError);
 })();

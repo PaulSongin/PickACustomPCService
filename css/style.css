@@ -622,3 +622,7 @@ main { min-height: 70vh; }
   .slot__actions { width: 100%; }
   .slot__actions .btn { flex: 1; }
 }
+
+/* ---- ловушка для спам-ботов в форме отзыва и длинная ссылка «Поделиться» ---- */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-msg--wrap { overflow-wrap: anywhere; }
