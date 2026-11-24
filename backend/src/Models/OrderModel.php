@@ -16,7 +16,7 @@ final class OrderModel
     private const NUMBER_MAX = 999999;
 
     /**
-     * Создать заказ вместе с составом и первой записью истории (в одной транзакции).
+     * Создать заказ вместе с резервированием остатков и первой записью истории (в одной транзакции).
      * Номер заказа — случайный, а не следующий по счёту: по нему нельзя узнать количество заказов.
      * @param array{token:string, name:string, phone:string, total:float, ip:string} $order
      * @param list<array{cat:string, pk:int, name:string, price:float}> $items
@@ -24,6 +24,14 @@ final class OrderModel
     public function create(array $order, array $items): int
     {
         return Database::transaction(static function (PDO $pdo) use ($order, $items): int {
+            $reserve = $pdo->prepare('UPDATE products SET stock = stock - 1 WHERE id = ? AND is_active = 1 AND stock > 0');
+            foreach ($items as $item) {
+                $reserve->execute([$item['pk']]);
+                if ($reserve->rowCount() !== 1) {
+                    throw new OutOfStockException($item['name']);
+                }
+            }
+
             $insert = $pdo->prepare(
                 'INSERT INTO orders (id, public_token, customer_name, phone, total, ip_address) VALUES (?, ?, ?, ?, ?, ?)'
             );
@@ -153,11 +161,16 @@ final class OrderModel
             $params[] = $value;
         }
 
-        return Database::transaction(static function (PDO $pdo) use ($sql, $params, $id, $to, $by, $comment): bool {
+        return Database::transaction(static function (PDO $pdo) use ($sql, $params, $id, $from, $to, $by, $comment): bool {
             $stmt = $pdo->prepare($sql);
             $stmt->execute($params);
             if ($stmt->rowCount() !== 1) {
                 return false;
+            }
+            if ($from === 'new' && $to === 'rejected') {
+                $pdo->prepare(
+                    'UPDATE products p JOIN order_items i ON i.product_id = p.id SET p.stock = p.stock + 1 WHERE i.order_id = ?'
+                )->execute([$id]);
             }
             $pdo->prepare('INSERT INTO order_status_history (order_id, status, comment, changed_by) VALUES (?, ?, ?, ?)')
                 ->execute([$id, $to, $comment, $by]);

@@ -7,6 +7,7 @@ use App\Core\App;
 use App\Core\Config;
 use App\Core\HttpException;
 use App\Models\OrderModel;
+use App\Models\OutOfStockException;
 use App\Models\RateLimitModel;
 use App\Services\Telegram\TelegramBot;
 use App\Support\Format;
@@ -54,10 +55,14 @@ final class OrderService
             $items[] = ['cat' => $cat, 'pk' => $p['_pk'], 'name' => $p['name'], 'price' => $p['price']];
         }
         $token = bin2hex(random_bytes(12));
-        $id = $this->orders->create(
-            ['token' => $token, 'name' => $data['name'], 'phone' => $data['phone'], 'total' => $total, 'ip' => $ip],
-            $items
-        );
+        try {
+            $id = $this->orders->create(
+                ['token' => $token, 'name' => $data['name'], 'phone' => $data['phone'], 'total' => $total, 'ip' => $ip],
+                $items
+            );
+        } catch (OutOfStockException $e) {
+            throw new ValidationException($e->getMessage());
+        }
         $this->limits->hit('order', $ip);
 
         $trackUrl = null;
